@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}{{ titulo }} · {{ cfg.site_name }}{% endblock %}
+{% block description %}{{ descripcion }}{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <h1>{{ cfg.site_name }}</h1>
+  <p class="hero-tagline">{{ cfg.site_tagline }}</p>
+  <p class="hero-meta">{{ total_nombres }} nombres documentados con origen, etimología, variantes y curiosidades.</p>
+
+  <div class="search-box">
+    <input type="search" id="search-input" placeholder="Busca un nombre (María, Mateo, Sofía…)" autocomplete="off" aria-label="Buscar nombre">
+  </div>
+</section>
+
+<section class="alpha-index" aria-label="Índice alfabético">
+  {% for ini in iniciales %}
+    <a href="#letra-{{ ini|lower }}" class="alpha-link">{{ ini }}</a>
+  {% endfor %}
+</section>
+
+{% for ini in iniciales %}
+<section class="letter-group" id="letra-{{ ini|lower }}">
+  <h2 class="letter-heading">{{ ini }}</h2>
+  <ul class="names-grid">
+    {% for n in grupos[ini] %}
+    <li class="name-card" data-name="{{ n.nombre|lower }}">
+      <a href="{{ url_for('nombre', slug=n.slug) }}">
+        <span class="name-card-title">{{ n.nombre }}</span>
+        <span class="name-card-meta">{{ n.origen }} · {{ n.significado|truncate(50) }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endfor %}
+
+<section class="intro-text">
+  <h2>¿Cómo se usa este diccionario de nombres?</h2>
+  <p>Este sitio recopila el <strong>significado, origen y etimología</strong> de los nombres más extendidos en español. Cada entrada incluye la raíz lingüística del nombre (hebreo, griego, latino, germánico, etc.), su significado literal, las variantes en otros idiomas, las figuras históricas que lo llevaron y una curiosidad o dato notable. Es útil para elegir el nombre de un bebé, para entender el propio o por simple curiosidad lingüística.</p>
+  <p>Los nombres están organizados alfabéticamente y se pueden buscar con la caja de arriba. El índice por letras permite saltar directamente a una inicial. Cada página de nombre está optimizada para buscadores y enlaza con nombres emparentados para facilitar la navegación.</p>
+</section>
+{% endblock %}

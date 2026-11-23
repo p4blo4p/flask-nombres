@@ -1,0 +1,19 @@
+# Entorno
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# Build de Frozen-Flask (se regenera con python build.py)
+build/
+
+# IDE / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

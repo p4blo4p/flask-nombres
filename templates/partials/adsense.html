@@ -1,0 +1,44 @@
+{# ════════════════════════════════════════════════════════════════════
+   ADSENSE — ÚNICO SITIO DONDE SE EDITA EL ADSENSE
+   ════════════════════════════════════════════════════════════════════
+   Sustituye PUB_ID por tu ID de editor (formato ca-pub-XXXXXXXXXXXXXXXX).
+   Lo encuentras en AdSense → Cuentas → Información de la cuenta.
+
+   Una vez puesto aquí, TODAS las páginas del sitio (portada, cada nombre,
+   sobre, 404) lo cargan automáticamente al heredar de base.html.
+
+   Para DESACTIVAR el AdSense (por ejemplo en pruebas), pon
+   ADSENSE_ENABLED = false y no se renderiza nada.
+   ════════════════════════════════════════════════════════════════════ #}
+{% set ADSENSE_ENABLED = true %}
+{% set PUB_ID = "ca-pub-0000000000000000" %}
+
+{# Script de carga: va en el <head> de cada página. #}
+{% macro head() %}
+{% if ADSENSE_ENABLED %}
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ PUB_ID }}"
+            crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="{{ PUB_ID }}">
+{% endif %}
+{% endmacro %}
+
+{# Bloque de anuncio: inserta un anuncio ahí donde se invoca.
+   Parámetros opcionales:
+     slot   = ID del bloque de anuncio (sin 'ca-'). Si vacío, usa anuncios automáticos.
+     format = 'auto' (por defecto), 'horizontal', 'vertical', 'rectangle'
+     responsive = true (por defecto, recomendado para móvil) #}
+{% macro unit(slot="", format="auto", responsive=true) %}
+{% if ADSENSE_ENABLED %}
+<div class="ad-unit" aria-label="Anuncio">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="{{ PUB_ID }}"
+       {% if slot %}data-ad-slot="{{ slot }}"{% endif %}
+       data-ad-format="{{ format }}"
+       data-full-width-responsive="{{ 'true' if responsive else 'false' }}"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+{% endif %}
+{% endmacro %}

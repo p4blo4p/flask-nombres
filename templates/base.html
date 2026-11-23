@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="{{ cfg.language }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ cfg.site_name }}{% endblock %}</title>
+  <meta name="description" content="{% block description %}{{ cfg.description }}{% endblock %}">
+  <meta name="author" content="{{ cfg.author }}">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="{{ cfg.base_url }}{{ request.path }}">
+
+  {# Open Graph / redes sociales #}
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ cfg.site_name }}">
+  <meta property="og:title" content="{% block og_title %}{{ cfg.site_name }}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}{{ cfg.description }}{% endblock %}">
+  <meta property="og:url" content="{{ cfg.base_url }}{{ request.path }}">
+  <meta property="og:locale" content="es_ES">
+  <meta name="twitter:card" content="summary">
+
+  {# Favicon y feed #}
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.svg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+  {# Datos estructurados JSON-LD (si la página lo define) #}
+  {% block jsonld %}{% endblock %}
+
+  {# ★ ADSENSE — se carga una sola vez aquí, en todas las páginas ★ #}
+  {% from "partials/adsense.html" import head as adsense_head %}
+  {{ adsense_head() }}
+</head>
+<body>
+  <a href="#main" class="skip-link">Saltar al contenido</a>
+
+  {% include "partials/header.html" %}
+
+  <main id="main" class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  {# Anuncio al final del contenido (aparece en todas las páginas) #}
+  <div class="container ad-bottom">
+    {% from "partials/adsense.html" import unit as adsense_unit %}
+    {{ adsense_unit() }}
+  </div>
+
+  {% include "partials/footer.html" %}
+
+  <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+</body>
+</html>

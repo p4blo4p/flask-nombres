@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}{{ titulo }} · {{ cfg.site_name }}{% endblock %}
+{% block description %}{{ descripcion }}{% endblock %}
+
+{% block content %}
+<article class="page-static">
+  <h1>Sobre {{ cfg.site_name }}</h1>
+
+  <p>{{ cfg.site_name }} es un diccionario digital de significados de nombres. Cada entrada documenta el origen lingüístico, la etimología, las variantes en otros idiomas, las figuras históricas que llevaron el nombre y una curiosidad destacada.</p>
+
+  <h2>Para quién es</h2>
+  <ul>
+    <li>Padres y madres buscando el nombre de un bebé.</li>
+    <li>Personas curiosas por el significado de su propio nombre.</li>
+    <li>Estudiantes de lingüística, antroponimia o historia.</li>
+    <li>Escritores y creadores buscando nombres con significado para sus personajes.</li>
+  </ul>
+
+  <h2>Cómo está hecho</h2>
+  <p>El sitio está generado estáticamente con <strong>Flask</strong> y <strong>Frozen-Flask</strong> a partir de un archivo JSON de datos. Esto significa que el contenido se sirve como HTML, CSS y JavaScript planos, sin servidor ni base de datos en producción: rápido, barato (hosting gratis en GitHub Pages) y excelente para SEO.</p>
+
+  <h2>Fuentes</h2>
+  <p>Las etimologías siguen obras de referencia estándar sobre antroponimía (diccionarios etimológicos de nombres propios, Behind the Name, repertorios de santoral). Las «características» asociadas a cada nombre son tradiciones populares reflejadas en manuales de nombres, <strong>no afirmaciones psicológicas</strong> verificadas científicamente.</p>
+
+  <h2>Contacto</h2>
+  <p>Si detectas un error en una etimología o quieres proponer un nombre nuevo, abre una issue en el repositorio del proyecto en GitHub.</p>
+</article>
+{% endblock %}

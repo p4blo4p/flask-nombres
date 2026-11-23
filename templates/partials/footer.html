@@ -1,0 +1,26 @@
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-col">
+      <p class="footer-title">{{ cfg.site_name }}</p>
+      <p class="footer-text">{{ cfg.site_tagline }}</p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Navegación</p>
+      <ul>
+        <li><a href="{{ url_for('index') }}">Todos los nombres</a></li>
+        <li><a href="{{ url_for('sobre') }}">Sobre el sitio</a></li>
+        <li><a href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Legal</p>
+      <p class="footer-text">
+        Las etimologías siguen obras de referencia estándar. Las «características» asociadas
+        a cada nombre son tradiciones populares, no afirmaciones psicológicas.
+      </p>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© {{ now.year }} {{ cfg.site_name }} · Hecho con Flask + Frozen-Flask</p>
+  </div>
+</footer>

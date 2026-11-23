@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}{{ titulo }}{% endblock %}
+{% block description %}{{ descripcion }}{% endblock %}
+{% block og_title %}{{ titulo }}{% endblock %}
+{% block og_description %}{{ descripcion }}{% endblock %}
+{% block jsonld %}
+<script type="application/ld+json">{{ jsonld|safe }}</script>
+{% endblock %}
+
+{% block content %}
+<nav class="breadcrumbs" aria-label="Migas de pan">
+  <a href="{{ url_for('index') }}">Inicio</a>
+  <span aria-hidden="true">›</span>
+  <span>Nombres con {{ n.nombre[0] }}</span>
+  <span aria-hidden="true">›</span>
+  <span>{{ n.nombre }}</span>
+</nav>
+
+<article class="name-page">
+  <header class="name-header">
+    <h1>{{ n.nombre }}</h1>
+    <p class="name-subtitle">Significado, origen y etimología del nombre {{ n.nombre }}</p>
+    <ul class="name-quickfacts">
+      <li><strong>Origen:</strong> {{ n.origen }}</li>
+      <li><strong>Género:</strong> {% if n.genero == 'F' %}femenino{% else %}masculino{% endif %}</li>
+      <li><strong>Onomástica:</strong> {{ n.dia_onomastico }}</li>
+    </ul>
+  </header>
+
+  {# Anuncio tras la cabecera (encima del pliegue, optimizado para móvil) #}
+  {% from "partials/adsense.html" import unit as adsense_unit %}
+  {{ adsense_unit(format="horizontal") }}
+
+  <section class="name-section">
+    <h2 id="significado">Significado del nombre {{ n.nombre }}</h2>
+    <p class="lead"><strong>{{ n.nombre }}</strong> significa {{ n.significado }}.</p>
+  </section>
+
+  <section class="name-section">
+    <h2 id="etimologia">Origen y etimología</h2>
+    <p>{{ n.etimologia }}</p>
+  </section>
+
+  <section class="name-section">
+    <h2 id="caracteristicas">Características asociadas</h2>
+    <p>En la tradición popular y los manuales de antroponimia, el nombre {{ n.nombre }} se asocia con los siguientes rasgos:</p>
+    <ul class="traits-list">
+      {% for c in n.caracteristicas %}
+      <li>{{ c }}</li>
+      {% endfor %}
+    </ul>
+    <p class="note">Estas asociaciones son tradiciones culturales, no afirmaciones psicológicas verificadas.</p>
+  </section>
+
+  {# Anuncio intermedio (entre secciones, captura la atención del lector) #}
+  {{ adsense_unit(format="rectangle") }}
+
+  <section class="name-section">
+    <h2 id="variantes">Variantes en otros idiomas</h2>
+    <p>El nombre {{ n.nombre }} tiene equivalentes en muchas lenguas, reflejo de su raíz compartida:</p>
+    <ul class="variants-list">
+      {% for v in n.variantes %}
+      <li>{{ v }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  {% if n.famosos %}
+  <section class="name-section">
+    <h2 id="famosos">Personajes famosos llamados {{ n.nombre }}</h2>
+    <ul class="famous-list">
+      {% for f in n.famosos %}
+      <li>{{ f }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if n.relacionados %}
+  <section class="name-section">
+    <h2 id="relacionados">Nombres relacionados</h2>
+    <p>Estos nombres comparten raíz etimológica, hipocorísticos o tradición con {{ n.nombre }}:</p>
+    <ul class="related-grid">
+      {% for r in relacionados %}
+      <li><a href="{{ url_for('nombre', slug=r.slug) }}">{{ r.nombre }}</a></li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  <section class="name-section">
+    <h2 id="curiosidad">Curiosidad sobre {{ n.nombre }}</h2>
+    <p>{{ n.curiosidad }}</p>
+  </section>
+
+  <section class="name-section faq">
+    <h2 id="faq">Preguntas frecuentes</h2>
+    <details>
+      <summary>¿Qué significa el nombre {{ n.nombre }}?</summary>
+      <p>{{ n.nombre }} significa {{ n.significado }}. Su origen es {{ n.origen }}.</p>
+    </details>
+    <details>
+      <summary>¿De dónde viene el nombre {{ n.nombre }}?</summary>
+      <p>{{ n.etimologia }}</p>
+    </details>
+    <details>
+      <summary>¿Cuándo se celebra el santo de {{ n.nombre }}?</summary>
+      <p>El día de {{ n.nombre }} en el santoral católico es el {{ n.dia_onomastico }}.</p>
+    </details>
+    <details>
+      <summary>¿Cuáles son las variantes de {{ n.nombre }} en otros idiomas?</summary>
+      <p>Algunas variantes: {{ n.variantes|join(', ') }}.</p>
+    </details>
+  </section>
+</article>
+
+<nav class="prev-next" aria-label="Navegación entre nombres">
+  <p class="more-names">Sigue explorando:</p>
+  <ul class="related-grid">
+    {% for r in relacionados[:4] %}
+    <li><a href="{{ url_for('nombre', slug=r.slug) }}">Significado de {{ r.nombre }}</a></li>
+    {% endfor %}
+  </ul>
+</nav>
+{% endblock %}

@@ -1,0 +1,12 @@
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="{{ url_for('index') }}" class="logo">
+      <span class="logo-mark">✦</span>
+      <span class="logo-text">{{ cfg.site_name }}</span>
+    </a>
+    <nav class="site-nav" aria-label="Principal">
+      <a href="{{ url_for('index') }}">Nombres</a>
+      <a href="{{ url_for('sobre') }}">Sobre</a>
+    </nav>
+  </div>
+</header>
